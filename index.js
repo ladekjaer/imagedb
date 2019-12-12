@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const p = require('path');
 const exiftool = require('./exiftool');
 
