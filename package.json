@@ -1,6 +1,6 @@
 {
   "name": "imagedb",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Script to create a sqlite database of image files.",
   "main": "index.js",
   "scripts": {
@@ -16,5 +16,14 @@
   "license": "ISC",
   "dependencies": {
     "sqlite3": "^4.1.1"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ladekjaer/imagedb.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ladekjaer/imagedb/issues"
+  },
+  "homepage": "https://github.com/ladekjaer/imagedb#readme"
 }
