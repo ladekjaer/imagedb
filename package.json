@@ -1,0 +1,20 @@
+{
+  "name": "imagedb",
+  "version": "0.0.1",
+  "description": "Script to create a sqlite database of image files.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "metadata",
+    "exiftool",
+    "image",
+    "database"
+  ],
+  "author": "Rasmus Ladekjær Pedersen",
+  "license": "ISC",
+  "dependencies": {
+    "sqlite3": "^4.1.1"
+  }
+}
