@@ -7,7 +7,7 @@ The Idea is, that imagedb should be used to to three things
   2. Finding duplicates
   3. Testing data integrity
   
- Using a standard sqlite3 database makes it easy for users who know SQL to run their own commands to extract data and create custom databases, views et c.
+ Using a standard sqlite3 database makes it easy for users who know SQL to run their own commands to extract data and create custom tables, views et c.
 
 ## Installation and usage
 
