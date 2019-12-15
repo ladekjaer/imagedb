@@ -26,6 +26,8 @@ imagedb my_photo_dir my_db.db
 
 If the command is run against an existing database, metadata from `my_photo_dir` will be added to it.
 
+To check which version is install simply run `imagedb -v` or `imagedb --version`.
+
 ## Todo
 
 - Adding hash of the image part of the files (to help finding duplicates).
