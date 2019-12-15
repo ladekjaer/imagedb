@@ -29,27 +29,24 @@ function loopFiles(directory) {
         }
         files.forEach(function(file) {
             const filepath = directory + '/' + file;
-            fileStat(filepath)
+            fs.stat(filepath, function(err, stats) {
+                if (stats.isDirectory()) {
+                    loopFiles(filepath)
+                } else {
+                    filesToHash.push({filepath: filepath, stats: stats});
+                    if (hashingRunning++ < maxHashingRunning) {
+                        computeHash(hash_algorithm, function (err) {
+                            if (err) {
+                                console.log(err);
+                                throw err;
+                            }
+                            hashingRunning--
+                        })
+                    }
+                }
+            })
         })
     })
-}
-
-function fileStat(filepath) {
-    const stats = fs.statSync(filepath);
-    if (stats.isDirectory()) {
-        loopFiles(filepath)
-    } else {
-        filesToHash.push({filepath: filepath, stats: stats});
-        if (hashingRunning++ < maxHashingRunning) {
-            computeHash(hash_algorithm, function(err) {
-                if (err) {
-                    console.err(err);
-                    throw err;
-                }
-                hashingRunning--
-            })
-        }
-    }
 }
 
 function computeHash(algorithm, callback) {
