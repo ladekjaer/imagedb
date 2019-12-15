@@ -33,3 +33,4 @@ If the command is run against an existing database, metadata from `my_photo_dir`
 - Finding some kind of unique Id for each image file (to make data integrity testing easier).
 - Avoid adding the same file more than once.
 - Use schema (to make it clearer for users how to handle the database file).
+- Possibility to compare two databases.
