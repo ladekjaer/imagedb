@@ -80,7 +80,7 @@ function insertStat(file_info, exif_info, callback) {
         $file_path: file_info.file_path,
         $file_hash: file_info.file_hash,
         $image_hash: file_info.image_hash,
-        $file_size: file_info.size,
+        $file_size: file_info.file_size,
     };
 
     Object.entries(exiftool_json_to_db).forEach(function(map) {
