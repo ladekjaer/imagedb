@@ -116,7 +116,7 @@ function computeHash(algorithm, callback) {
 
     image_process.on('close', function (code) {
         if (code) {
-            image_hash = null
+            image_hash = null;
             if (verbose) {
                 console.error('Unable to extract image data from %s (exiftool error code: %s)', file.filepath, code);
             }
