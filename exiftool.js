@@ -78,7 +78,7 @@ function computeHash(algorithm, callback) {
         if (code) console.log('The exit code for %s is %s', file.filepath, code);
         exif_info = extractExif(exif);
         if (done) {
-            nextFile(file.filepath, hash, file.stats.size, exif_info, algorithm, callback)
+            nextFile(file.filepath, hash, null, file.stats.size, exif_info, algorithm, callback)
         } else {
             done = true
         }
@@ -101,18 +101,18 @@ function computeHash(algorithm, callback) {
         exiftool.stdin.end();
 
         if (done) {
-            nextFile(file.filepath, hash, file.stats.size, exif_info, algorithm, callback)
+            nextFile(file.filepath, hash, null, file.stats.size, exif_info, algorithm, callback)
         } else {
             done = true
         }
     })
 }
 
-function nextFile(filepath, hash, size, exif_info, algorithm, callback) {
+function nextFile(filepath, file_hash, image_hash, size, exif_info, algorithm, callback) {
     let file_info = {
         file_path: filepath,
-        file_hash: hash,
-        image_hash: null,
+        file_hash: file_hash,
+        image_hash: image_hash,
         file_size: size
     };
     database.insertStat(file_info, exif_info, function(err, rowInserted) {
