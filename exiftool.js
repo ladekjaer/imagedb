@@ -85,19 +85,6 @@ function computeHash(algorithm, callback) {
         }
     });
 
-    // begin image_hash
-    // Check file type -- would be better with exif info
-    // let fileExtension = file.filepath.split('.')[1];
-    // if (!fileExtension) {
-    //     console.log('File "%s" is ignores.', file)
-    //     return;
-    // }
-    // if (['JPG', 'NEF', 'CR2', 'RW2'].indexOf(fileExtension.toUpperCase()) < 0) {
-    //     console.log('Files with extension "%s" are ignores.', fileExtension)
-    //     return;
-    // }
-    // End file type check
-
     const image_process = spawn('exiftool', ['-m', '-all=', '-']);
 
     image_process.stdout.on('data', function (chunk) {
@@ -127,7 +114,6 @@ function computeHash(algorithm, callback) {
             nextFile(file.filepath, hash, image_hash, file.stats.size, exif_info, algorithm, callback)
         }
     });
-    // end image_hash
 
     rs.on('open', function() {});
 
