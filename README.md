@@ -30,7 +30,7 @@ To check which version is install simply run `imagedb -v` or `imagedb --version`
 
 ## Todo
 
-- Adding hash of the image part of the files (to help finding duplicates).
+- [x] Adding hash of the image part of the files (to help finding duplicates).
   - Require hashes of the image parts to be unique
 - Finding some kind of unique Id for each image file (to make data integrity testing easier).
 - Avoid adding the same file more than once.
