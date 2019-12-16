@@ -56,40 +56,31 @@ function computeHash(algorithm, callback) {
         return callback(null)
     }
 
-    let hash = crypto.createHash(algorithm);
+    let rs = fs.createReadStream(file.filepath);
+    const image_metadata_process = spawn('exiftool', ['-json', '-']);
+    const image_process = spawn('exiftool', ['-m', '-all=', '-']);
+    let file_hash = crypto.createHash(algorithm);
     let image_hash = crypto.createHash(algorithm);
-    let rs;
-    rs = fs.createReadStream(file.filepath);
-    const exiftool = spawn('exiftool', ['-json', '-']);
     let exif = '';
     let exif_error = '';
     let exif_info = {};
 
-    exiftool.stdout.on('data', function(chunk) {
-        exif += chunk
-    });
+    image_metadata_process.stdout.on('data', function(chunk) {exif += chunk});
+    image_metadata_process.stderr.on('data', function(chunk) {exif_error += chunk});
 
-    exiftool.stderr.on('data', function(chunk) {
-        exif_error += chunk
-    });
-
-    exiftool.stdin.on('error', function(e){
+    image_metadata_process.stdin.on('error', function(e){
         console.error("EXIFTOOL: rs.pipe has error:" + e.message)
     });
 
-    exiftool.on('close', function(code) {
+    image_metadata_process.on('close', function(code) {
         if (verbose && code) console.error('Unable to extract image metadata from %s (exiftool error code: %s)', file.filepath, code);
         exif_info = extractExif(exif);
         if (--running === 0) {
-            nextFile(file.filepath, hash, image_hash, file.stats.size, exif_info, algorithm, callback)
+            nextFile(file.filepath, file_hash, image_hash, file.stats.size, exif_info, algorithm, callback)
         }
     });
 
-    const image_process = spawn('exiftool', ['-m', '-all=', '-']);
-
-    image_process.stdout.on('data', function (chunk) {
-        image_hash.update(chunk)
-    });
+    image_process.stdout.on('data', function (chunk) {image_hash.update(chunk)});
 
     image_process.stderr.on('data', function(chunk) {
         if (verbose) {
@@ -111,30 +102,26 @@ function computeHash(algorithm, callback) {
             image_hash = image_hash.digest('hex');
         }
         if (--running === 0) {
-            nextFile(file.filepath, hash, image_hash, file.stats.size, exif_info, algorithm, callback)
+            nextFile(file.filepath, file_hash, image_hash, file.stats.size, exif_info, algorithm, callback)
         }
     });
 
     rs.on('open', function() {});
-
-    rs.on('error', function(err) {
-        console.error('RS: Read stream error');
-        throw err
-    });
+    rs.on('error', function(err) {throw err});
 
     rs.on('data', function(chunk) {
-        hash.update(chunk);
-        exiftool.stdin.write(chunk);
+        file_hash.update(chunk);
+        image_metadata_process.stdin.write(chunk);
         image_process.stdin.write(chunk)
     });
 
     rs.on('end', function() {
-        hash = hash.digest('hex');
-        exiftool.stdin.end();
+        file_hash = file_hash.digest('hex');
+        image_metadata_process.stdin.end();
         image_process.stdin.end();
 
         if (--running === 0) {
-            nextFile(file.filepath, hash, image_hash, file.stats.size, exif_info, algorithm, callback)
+            nextFile(file.filepath, file_hash, image_hash, file.stats.size, exif_info, algorithm, callback)
         }
     })
 }
