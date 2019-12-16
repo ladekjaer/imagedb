@@ -68,18 +68,18 @@ Object.entries(exiftool_json_to_db).forEach(function(map) {
     sqlInsert += map[1].dbFieldName;
     sqlInsert += ", "
 });
-sqlCreate += 'path text, file_hash text, size integer)';
-sqlInsert += '$path, $file_hash, $size)';
+sqlCreate += 'file_path text, file_hash text, file_size integer)';
+sqlInsert += '$file_path, $file_hash, $file_size)';
 
-function insertStat(filepath, hash, size, exif_info, callback) {
-    let filename = filepath.split('/');
+function insertStat(file_info, exif_info, callback) {
+    let filename = file_info.file_path.split('/');
     filename = filename[filename.length - 1];
 
     const insertMap = {
         $filename: filename,
-        $path: filepath,
-        $file_hash: hash,
-        $size: size,
+        $file_path: file_info.file_path,
+        $file_hash: file_info.file_hash,
+        $file_size: file_info.size,
     };
 
     Object.entries(exiftool_json_to_db).forEach(function(map) {

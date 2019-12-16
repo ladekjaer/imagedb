@@ -109,7 +109,12 @@ function computeHash(algorithm, callback) {
 }
 
 function nextFile(filepath, hash, size, exif_info, algorithm, callback) {
-    database.insertStat(filepath, hash, size, exif_info, function(err, rowInserted) {
+    let file_info = {
+        file_path: filepath,
+        file_hash: hash,
+        file_size: size
+    };
+    database.insertStat(file_info, exif_info, function(err, rowInserted) {
         if (err) {
             console.error('database error');
             throw err
