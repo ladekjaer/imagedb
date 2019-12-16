@@ -73,7 +73,9 @@ function computeHash(algorithm, callback) {
     });
 
     image_metadata_process.on('close', function(code) {
-        if (verbose && code) console.error('Unable to extract image metadata from %s (exiftool error code: %s)', file.filepath, code);
+        if (verbose && code) {
+            console.error('Unable to extract image metadata from %s (exiftool error code: %s)', file.filepath, code);
+        }
         exif_info = extractExif(exif);
         if (--running === 0) {
             nextFile(file.filepath, file_hash, image_hash, file.stats.size, exif_info, algorithm, callback)
