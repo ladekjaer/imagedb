@@ -112,6 +112,7 @@ function nextFile(filepath, hash, size, exif_info, algorithm, callback) {
     let file_info = {
         file_path: filepath,
         file_hash: hash,
+        image_hash: null,
         file_size: size
     };
     database.insertStat(file_info, exif_info, function(err, rowInserted) {
