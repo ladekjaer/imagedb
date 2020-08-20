@@ -1,6 +1,6 @@
 {
   "name": "imagedb",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Script to create a sqlite database of image files.",
   "main": "index.js",
   "bin": {
