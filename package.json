@@ -17,10 +17,6 @@
   ],
   "author": "Rasmus Ladekjær Pedersen",
   "license": "ISC",
-  "dependencies": {
-    "sqlite3": "^4.1.1"
-  },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ladekjaer/imagedb.git"
@@ -28,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/ladekjaer/imagedb/issues"
   },
-  "homepage": "https://github.com/ladekjaer/imagedb#readme"
+  "homepage": "https://github.com/ladekjaer/imagedb#readme",
+  "dependencies": {
+    "sqlite3": "^5.1.6"
+  }
 }
